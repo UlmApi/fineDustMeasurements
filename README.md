@@ -7,3 +7,6 @@ This project uses the fancybox JS/CSS library, downloaded from here: `http://fan
 This project uses the LeafletJS library.
 
 This project uses the JQuery library.
+
+
+For parsing CSVs, this project uses the libtext-csv-perl library.
