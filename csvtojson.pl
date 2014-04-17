@@ -23,9 +23,9 @@ my @measurements = $csv->getline_all($FH);
 #we skip the first line, since it only contains the addresses
 #measurements is a list of arrayrefs
 
-foreach my $col (1..$#data+1) { #1, damit datums nicht doppelt sind
+foreach my $col (1..$#data+1) {
   my @entry;
-  foreach my $line (0..$#{$measurements[0]}) { #0, damit address da sind
+  foreach my $line (0..$#{$measurements[0]}) {
     #(date, value)
     push (@entry, [$measurements[0]->[$line][0], $measurements[0]->[$line][$col]]);
  }
