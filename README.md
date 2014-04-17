@@ -9,4 +9,6 @@ This project uses the LeafletJS library.
 This project uses the JQuery library.
 
 
-For parsing CSVs, this project uses the libtext-csv-perl library.
+For generating the json data from the cvs, this project uses
+On Debian: ```apt-get install libtext-csv-perl libjson-perl```
+On Redhat: ```yum install perl-JSON perl-Text-CSV```
