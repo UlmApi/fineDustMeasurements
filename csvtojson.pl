@@ -19,17 +19,17 @@ push(@data, {'address' => $_}) foreach (@$addresses);
 #the first entry in the csv is just "datum", so we drop it
 shift(@data);
 
-my @measurements = $csv->getline_all ($FH, 1);
+my @measurements = $csv->getline_all($FH);
 #we skip the first line, since it only contains the addresses
 #measurements is a list of arrayrefs
 
-foreach my $col (1..$#data) {
+foreach my $col (1..$#data+1) { #1, damit datums nicht doppelt sind
   my @entry;
-  foreach my $line (1..$#{$measurements[0]}) {
+  foreach my $line (0..$#{$measurements[0]}) { #0, damit address da sind
     #(date, value)
     push (@entry, [$measurements[0]->[$line][0], $measurements[0]->[$line][$col]]);
  }
- push(@{$data[$col]{'measurements'}}, @entry);
+ push(@{$data[$col-1]{'measurements'}}, @entry);
 }
 close $FH;
 
