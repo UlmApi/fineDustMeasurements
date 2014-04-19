@@ -1,6 +1,6 @@
 <html>
 <head>
-   <title>Übersicht der Feinstabmessungen in Baden-Würtemberg</title>
+   <title>Übersicht der Feinstabmessungen in Baden-Württemberg</title>
 
 	<meta charset="utf-8">   
    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -119,6 +119,9 @@
 
    <script language="javascript">
 
+//scale factor for the circles. This means, scaleFactor*value is used as circle size.
+var scaleFactor = 150;
+
 /**
 color values. 
 **/
@@ -158,7 +161,7 @@ Function to generate a circle.
 		}else{
 			colorValue = pink;
 		}
-		size=30*value; //size of the circle -- important for colorblind users!
+		size=scaleFactor*value; //size of the circle -- important for colorblind users!
 	
 	
 		var circle = L.circle(position, size, {
@@ -191,6 +194,7 @@ Function to draw a specified date.
 					val=measure[j][1];
 				}
 			}
+			console.log("Creating circle for " + data[i]["address"] + " at " + data[i]["coords"] + " with value " + val);
 			myCircle = circleInstance(data[i]["address"], data[i]["coords"], val);
 			circles.push(myCircle);
 			myCircle.addTo(map);
@@ -207,23 +211,20 @@ Init function.
               
       	 L.tileLayer('http://{s}.tile.cloudmade.com/3a83164a47874169be4cabc2e8b8c449/33481/256/{z}/{x}/{y}.png', {
             attribution: '<a href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
-            maxZoom: 18
+            maxZoom: 12
          }).addTo(map);
          map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
 
          //buildCtrls().addTo(map);
 
-         var ulm = new L.LatLng(48.40, 9.98); 
-         map.setView(ulm, 12);
+         var bw= new L.LatLng(48.62969, 9.1949); 
+         map.setView(bw, 8);
 
-	
-	
-	console.log("getting data.json");
          $.getJSON("data.json", function(json) {
 			console.log(json); // this will show the info it in firebug console
 			data = eval(json); // load
-			//we loaded everything, lets draw 1.1.2013
-			draw("1.1.2013");
+			//we loaded everything, lets draw 1.1.13
+			draw("1.1.13");
 		}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
 		});
@@ -256,7 +257,7 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 
    <div id="legend">
 	Selektierter Tag: (todo)<br>
-	<input type="text" name="dateInput" value="1.1.2013"> <input onclick="draw(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> <br>
+	<input type="text" name="dateInput" value="1.1.13"> <input onclick="draw(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> <br>
 	<!--<p>
 	 <input onclick="putOver3();" type="radio" name="age" value="ueber3" checked> Plätze für Kinder über 3 Jahre <br/>
 	 <input onclick="putUnder3();" type="radio" name="age" value="unter3"> Plätze für Kinder unter 3 Jahre </p>
