@@ -221,7 +221,7 @@ Init function.
          map = new L.Map('map');                       
               
       	 L.tileLayer('http://{s}.tile.cloudmade.com/3a83164a47874169be4cabc2e8b8c449/33481/256/{z}/{x}/{y}.png', {
-            attribution: '<a href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
+            attribution: '<a target="_blank" href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
             maxZoom: 12
          }).addTo(map);
          map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
@@ -282,7 +282,9 @@ Init function.
 
    <div id="dialog">
    <h4>&Uuml;ber dieses Projekt</h4>
-(TODO)
+<p>Auf diese Karte werden Messungen von Feinstaub in Baden-Württemberg angezeigt. Die aktuelle Anzeige beeinhaltet keine Messdaten -- dies passiert erst dann, wenn die Daten veröffentlicht werden. Die Positionen der Kreisen sind in die Original-Quelle nicht vorhanden, und würden von uns abgeschätzt auf Basis von der Strasse, auf dem die Messungen statt funden.</p>
+
+<p>Dieses Projekt ist von der <a target="_blank" href="http://www.ulmapi.de">datalove-Gruppe / UlmAPI</a> entwickelt worden. Der Quelltext der Seite, sowie die Daten und Skripte, um die Daten zu aktualisieren, befinden sich auf <a target="_blank" href="https://github.com/UlmApi/fineDustMeasurements">github</a>.</p>
 
 <h4>Kontakt</h4>
 <p>WWW: <a target="_blank" href="http://www.ulmapi.de">ulmapi.de</a><br/>
@@ -293,29 +295,20 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 
 
    <div id="legend">
-	Auswahl eines Tages:<br>
-	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> <br>
-	<!--<p>
-	 <input onclick="putOver3();" type="radio" name="age" value="ueber3" checked> Plätze für Kinder über 3 Jahre <br/>
-	 <input onclick="putUnder3();" type="radio" name="age" value="unter3"> Plätze für Kinder unter 3 Jahre </p>
-	
-
-		<a href='#dialog' class='fancybox'>Mehr Informationen über diese Karte…</a>
-   <h4>Legende</h4>
-   <ul style="list-style: none;padding:0; margin:0;">
-   	<li><img src="img/box.png" > unbekannt</li>   	
-
-   	<li><img src="img/box-checked.png"> freie Plätze</li>   	
-   	<li><img src="img/box-crossed.png"> keine Plätze</li>   	
-
-   </ul>--!>
-	
+	<p>	<a href='#dialog' class='fancybox'>Mehr Informationen über diese Karte…</a></p>
+	<p> Wählen Sie ein Tag aus, oder verwenden Sie den Schieber.<br>
+	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
        <div id="slider">
-       </div>
+       </div><br>
+
+   <h4>Legende</h4>
+	Die Farbe und größe jeden Kreis stellt die größe der Feinstaubwert vor. <br>
+	(hier erscheint später eine Legende).
+
    </div>
    
    <div class="logos">
-      <a href="http://www.ulmapi.de"><img src="img/ulmapi.png" alt="ulmapi" title="Ein Projekt von datalove ulm / ulmAPI.de"></a>
+      <a target="_blank" href="http://www.ulmapi.de"><img src="img/ulmapi.png" alt="ulmapi" title="Ein Projekt von datalove ulm / ulmAPI.de"></a>
    </div>
 
    <div id="map"></div>
