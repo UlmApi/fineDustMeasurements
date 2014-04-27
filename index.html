@@ -245,8 +245,8 @@ Init function.
 					var coord = [];
 					//this part is rather silly, I should just change addr_coord.json to be an address->coord map.
 					for(var j=0; j<addrToCoord.length; j++){
-						if(data[i]["address"]==addrToCoord[i]["address"]){
-							coord=addrToCoord[i]["coords"];
+						if(data[i]["address"]==addrToCoord[j]["address"]){
+							coord=addrToCoord[j]["coords"];
 						}
 					}
 					if(coord==[]){console.log("Warning, did not find coordinates for " + data[i]);}
