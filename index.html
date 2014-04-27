@@ -144,16 +144,16 @@ var orange = "orange";
 var red = "red";
 var pink = "purple";
 
-/**
-Global vars.
-**/
+	/**
+	Global vars.
+	**/
 	var map;
 	var data;
 	var circleLayer;
 
-/**
-Function to generate a circle.
-**/
+	/**
+	Function to generate a circle.
+	**/
 	//address: string containing location of measurement node.
 	//position: coordinates as array, e.g. [48.40, 9.98]
 	//value: measurement value in µg/m³.
@@ -184,9 +184,10 @@ Function to generate a circle.
 		circle.bindPopup("Addresse: <b>" + address +  "</b>");
 		return circle;
 	} // end of circleInstance
-/**
-Function to draw a specified date.
-**/
+
+	/**
+	Function to draw a specified date.
+	**/
 	function draw(myDate){
 		var circles=[];
 		if(circleLayer != null){
@@ -205,6 +206,9 @@ Function to draw a specified date.
 					val=measure[j][1];
 				}
 			}
+			if(val == "-"){
+				continue; // don't draw this circle, there was no valid measurement
+			}
 			console.log("Creating circle for " + data[i]["address"] + " at " + data[i]["coords"] + " with value " + val);
 			myCircle = circleInstance(data[i]["address"], data[i]["coords"], val);
 			circles.push(myCircle);
@@ -217,46 +221,65 @@ Function to draw a specified date.
 /**
 Init function.
 **/
-      function init() {
-         map = new L.Map('map');                       
-              
-      	 L.tileLayer('http://{s}.tile.cloudmade.com/3a83164a47874169be4cabc2e8b8c449/33481/256/{z}/{x}/{y}.png', {
-            attribution: '<a target="_blank" href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
-            maxZoom: 12
-         }).addTo(map);
-         map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+	function init() {
+		map = new L.Map('map');                       
+	      
+		L.tileLayer('http://{s}.tile.cloudmade.com/3a83164a47874169be4cabc2e8b8c449/33481/256/{z}/{x}/{y}.png', {
+		   attribution: '<a target="_blank" href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
+		   maxZoom: 12
+		}).addTo(map);
+		map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+	
+		//buildCtrls().addTo(map);
+	
+		var bw= new L.LatLng(48.62969, 9.1949); 
+		map.setView(bw, 8);
+	
+		$.getJSON("data.json", function(json) {
+			$.getJSON("addr_coord.json", function(json0){
+				data = eval(json); // load
+				addrToCoord = eval(json0);
+				console.log(addrToCoord);
 
-         //buildCtrls().addTo(map);
-
-         var bw= new L.LatLng(48.62969, 9.1949); 
-         map.setView(bw, 8);
-
-         $.getJSON("data.json", function(json) {
-			console.log(json); // this will show the info it in firebug console
-			data = eval(json); // load
-			var arr=data[0]["measurements"];
-			for(var i = 0; i<arr.length; i++){ // fill the timeStep array; assumes the json is sorted.
-				timeStep[i] = arr[i][0];
-			}
-
- 			$(function() {
-				var cbSlider = function(event, ui){
-					draw(timeStep[ui.value]);
-					$("#dateInput").val(timeStep[ui.value]);
+				for(var i=0; i<data.length; i++){
+					var coord = [];
+					//this part is rather silly, I should just change addr_coord.json to be an address->coord map.
+					for(var j=0; j<addrToCoord.length; j++){
+						if(data[i]["address"]==addrToCoord[i]["address"]){
+							coord=addrToCoord[i]["coords"];
+						}
+					}
+					if(coord==[]){console.log("Warning, did not find coordinates for " + data[i]);}
+					data[i]["coord"]=coord;
 				}
-				$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, change: cbSlider});
+
+				var arr=data[0]["measurements"];
+				for(var i = 0; i<arr.length; i++){ // fill the timeStep array; assumes the json is sorted.
+					timeStep[i] = arr[i][0];
+				}
+		
+				$(function() {
+					var cbSlider = function(event, ui){
+						draw(timeStep[ui.value]);
+						$("#dateInput").val(timeStep[ui.value]);
+					}
+					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, change: cbSlider});
+				});
+		
+				//we loaded everything, lets draw the first date
+				draw(timeStep[0]);
+				$("#dateInput").val(timeStep[0]);
+			}).fail(function( jqxhr, textStatus, error ) {
+			console.log( "error:" + jqxhr+ textStatus+ error  );
 			});
-
-			//we loaded everything, lets draw the first date
-			draw(timeStep[0]);
-			$("#dateInput").val(timeStep[0]);
-
+	
 		}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
 		});
 
-      } // end of init
+	} // end of init
 
+	/*function to manually set the date. It assumes a correct date format.*/
 	function showManual(str){
 		console.log(str);
 		draw(str);
