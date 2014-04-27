@@ -206,8 +206,9 @@ var pink = "purple";
 					val=measure[j][1];
 				}
 			}
-			if(val == "-"){
-				continue; // don't draw this circle, there was no valid measurement
+			if(val == "-" || typeof data[i]["coords"] == 'undefined' || data[i]["coords"].length==0 || data[i]["coords"]== "unknown"){
+				console.log("Warning, could not create circle for " + data[i]["address"]);
+				continue; 
 			}
 			console.log("Creating circle for " + data[i]["address"] + " at " + data[i]["coords"] + " with value " + val);
 			myCircle = circleInstance(data[i]["address"], data[i]["coords"], val);
@@ -217,6 +218,24 @@ var pink = "purple";
 		circleLayer = L.layerGroup(circles);
 		circleLayer.addTo(map);
 	} // end of draw
+
+
+
+
+function doGeoNames(index){
+	var query =  "http://api.geonames.org/searchJSON?formatted=true&q=" + data[index]["address"] + ",%20germany&maxRows=1&lang=en&username=";
+	return $.getJSON(query, function(res){
+		 
+		if(typeof res["geonames"] == 'undefined' || res["totalResultsCount"] == 0){
+			data[index]["coords"]=undefined;
+			console.log("could not obtain geonames result");
+			return;
+		}else{
+			data[index]["coords"]=[res["geonames"][0]["lat"], res["geonames"][0]["lng"]];
+			console.log('{"address": '+data[index]["address"]+' "coords":'+data[index]["coords"]+'}');
+		}
+	});
+}
 
 /**
 Init function.
@@ -236,6 +255,7 @@ Init function.
 		map.setView(bw, 8);
 	
 		$.getJSON("data.json", function(json) {
+			var obj;
 			$.getJSON("addr_coord.json", function(json0){
 				data = eval(json); // load
 				addrToCoord = eval(json0);
@@ -249,8 +269,23 @@ Init function.
 							coord=addrToCoord[j]["coords"];
 						}
 					}
-					if(coord==[]){console.log("Warning, did not find coordinates for " + data[i]);}
-					data[i]["coord"]=coord;
+					if(coord.length==0 ){
+						console.log("Warning, did not find coordinates for " + data[i]["address"]);
+						try{
+							if(obj){
+								obj=obj.done(doGeoNames(i));
+							}
+							else{
+								obj=doGeoNames(i);
+							}
+						}catch(e){
+							console.log(e);
+							data[i]["coords"]=undefined;
+						}
+						console.log(data[i]);
+					}else{
+						data[i]["coords"]=coord;
+					}
 				}
 
 				var arr=data[0]["measurements"];
@@ -267,7 +302,11 @@ Init function.
 				});
 		
 				//we loaded everything, lets draw the first date
-				draw(timeStep[0]);
+				if(obj){
+					obj.done(draw(timeStep[0]));
+				}else{
+					draw(timeStep[0]);
+				}
 				$("#dateInput").val(timeStep[0]);
 			}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
