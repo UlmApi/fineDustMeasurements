@@ -127,6 +127,12 @@
 
 //scale factor for the circles. This means, scaleFactor*value is used as circle size.
 var scaleFactor = 150;
+var minSize=1000;
+var maxSize=15000;
+
+function doScale(x){
+	return Math.min(minSize + x*scaleFactor, maxSize);
+}
 
 // array that will map integers to strings. Filled at the start, so that we can dynamically assign numbers and days.
 // the idea is that timeStep[i] will be the ith day of the year, assuming exactly one years worth of data is loaded.
@@ -134,15 +140,8 @@ var scaleFactor = 150;
 // then, timeStep[i] will be the ith month instead. Obviously, this requires that the json is ordered.
 var timeStep = [];
 
-/**
-color values. 
-**/
-var darkGreen = "green";
-var lightGreen = "lightgreen";
-var yellow = "yellow";
-var orange = "orange";
-var red = "red";
-var pink = "purple";
+//dictionary that maps a value to its circles' properties (currently only the color).
+var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["orange"], 100: ["red"], 1000: ["purple"] };
 
 	/**
 	Global vars.
@@ -161,19 +160,19 @@ var pink = "purple";
 		var colorValue = "";
 		var size;
 		if(value <= 10){
-			colorValue = darkGreen;
+			colorValue = decoration[10];
 		}else if(value <= 20){
-			colorValue = lightGreen;
+			colorValue = decoration[20];
 		}else if(value <= 35){
-			colorValue = yellow;
+			colorValue = decoration[35];
 		}else if(value <= 50){
-			colorValue = orange;
+			colorValue = decoration[50];
 		}else if(value <= 100){
-			colorValue = red;
+			colorValue = decoration[100];
 		}else{
-			colorValue = pink;
+			colorValue = decoration[1000];
 		}
-		size=scaleFactor*value; //size of the circle -- important for colorblind users!
+		size=doScale(value); //size of the circle -- important for colorblind users!
 	
 	
 		var circle = L.circle(position, size, {
@@ -181,7 +180,7 @@ var pink = "purple";
 			fillColor: colorValue,
 			fillOpacity: 0.5
 		});
-		circle.bindPopup("Addresse: <b>" + address +  "</b>");
+		circle.bindPopup("Addresse: <b>" + address +  "</b><br>Hat den Wert " + value + ".");
 		return circle;
 	} // end of circleInstance
 
