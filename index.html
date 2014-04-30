@@ -1,6 +1,6 @@
 <html>
 <head>
-   <title>Übersicht der Feinstabmessungen in Baden-Württemberg</title>
+   <title>Übersicht der Feinstaubmessungen in Baden-Württemberg</title>
 
 	<meta charset="utf-8">   
    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -180,7 +180,7 @@ var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["or
 			fillColor: colorValue,
 			fillOpacity: 0.5
 		});
-		circle.bindPopup("Addresse: <b>" + address +  "</b><br>Hat den Wert " + value + ".");
+		circle.bindPopup("Adresse: <b>" + address +  "</b><br>Wert: " + value + "&micro;g/m&sup3;");
 		return circle;
 	} // end of circleInstance
 
@@ -242,7 +242,7 @@ Init function.
 	function init() {
 		map = new L.Map('map');                       
 	      
-		L.tileLayer('http://{s}.tile.cloudmade.com/3a83164a47874169be4cabc2e8b8c449/33481/256/{z}/{x}/{y}.png', {
+		L.tileLayer('http://134.60.77.150/osm/{z}/{x}/{y}.png', {
 		   attribution: '<a target="_blank" href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 CloudMade',
 		   maxZoom: 12
 		}).addTo(map);
@@ -343,9 +343,9 @@ Init function.
 
    <div id="dialog">
    <h4>&Uuml;ber dieses Projekt</h4>
-<p>Auf diese Karte werden Messungen von Feinstaub in Baden-Württemberg angezeigt (aktuell nur 2004). Die Daten stammen aus einer Excel-Tabelle von einer Landsbehörde (<a href="http://www.lubw.baden-wuerttemberg.de/" target="_blank">LUBW</a>) und sind öffentlich. Die Positionen der Kreisen sind in die Original-Quelle nicht vorhanden: wir haben <a target="_blank" href="http://geonames.org/">geonames</a> verwendet, um die Position auf zu lösen.</p>
+<p>Auf dieser Karte werden Messungen von Feinstaub in Baden-Württemberg angezeigt (aktuell nur f&uuml;r 2004). Die Daten stammen aus einer Excel-Tabelle von einer Landsbehörde (<a href="http://www.lubw.baden-wuerttemberg.de/" target="_blank">LUBW</a>) und sind öffentlich. Die Positionen der Kreise sind in der Original-Quelle nicht vorhanden: Wir haben <a target="_blank" href="http://geonames.org/">geonames</a> verwendet, um die Positionen aufzulösen.</p>
 
-<p>Dieses Projekt ist von der <a target="_blank" href="http://www.ulmapi.de">datalove-Gruppe / UlmAPI</a> entwickelt worden. Der Quelltext der Seite, sowie die Daten und Skripte, um die Daten zu aktualisieren, befinden sich auf <a target="_blank" href="https://github.com/UlmApi/fineDustMeasurements">github</a>.</p>
+<p>Dieses Projekt ist von der <a target="_blank" href="http://www.ulmapi.de">datalove-Gruppe / UlmAPI</a> entwickelt worden. Der Quelltext der Seite, sowie die Daten und Skripte um die Daten zu aktualisieren, befindet sich auf <a target="_blank" href="https://github.com/UlmApi/fineDustMeasurements">github</a>.</p>
 
 <h4>Kontakt</h4>
 <p>WWW: <a target="_blank" href="http://www.ulmapi.de">ulmapi.de</a><br/>
@@ -357,19 +357,19 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 
    <div id="legend">
 	<p>	<a href='#dialog' class='fancybox'>Mehr Informationen über diese Karte…</a></p>
-	<p> Wählen Sie ein Tag aus, oder verwenden Sie den Schieber.<br>
+	<p> Wählen Sie einen Tag aus oder verwenden Sie den Schieber.<br>
 	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
        <div id="slider">
        </div><br>
 
    <h4>Legende</h4>
-	Die Farbe und größe jeden Kreis stellt die größe der Feinstaubwert vor. <br>
+	Die Farbe und Größe jedes Kreises stellt den Feinstaubwert dar. <br>
 	(hier erscheint später eine Legende).
 
    </div>
    
    <div class="logos">
-      <a target="_blank" href="http://www.ulmapi.de"><img src="img/ulmapi.png" alt="ulmapi" title="Ein Projekt von datalove ulm / ulmAPI.de"></a>
+      <a target="_blank" href="http://www.ulmapi.de"><img src="img/ulmapi.png" alt="ulmapi" title="Ein Projekt von Datalove Ulm / ulmAPI.de"></a>
    </div>
 
    <div id="map"></div>
