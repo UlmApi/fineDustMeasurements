@@ -11,7 +11,7 @@
 			box-shadow: 0 0 50px #222;
 		}
 
-   html, body, #map, h4, ul {
+   table, html, body, #map, h4, ul {
       height:100%;
       width:100%;
       padding:0px;
@@ -68,6 +68,16 @@
    
 	#slider{
 	margin:12px;
+	}
+	#legendblock2,#legendblock3,#legendblock4,#legendblock5 {
+	width: 50%;
+	color: #000;
+	font-family: sans;
+	}
+	#legendblock6, #legendblock1, #legenddescr{
+	color: #EEEEEE;
+	font-family: sans;
+	width: 50%;
 	}
 	#legend{
 	background:#777777;
@@ -176,9 +186,9 @@ var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["or
 	
 	
 		var circle = L.circle(position, size, {
-			color: "#FFFFFF",
+			color: "#666",
 			fillColor: colorValue,
-			fillOpacity: 0.5
+			fillOpacity: 0.6
 		});
 		circle.bindPopup("Adresse: <b>" + address +  "</b><br>Wert: " + value + "&micro;g/m&sup3;");
 		return circle;
@@ -314,7 +324,13 @@ Init function.
 		}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
 		});
-
+		
+		document.getElementById('legendblock1').style.backgroundColor=decoration[10];
+		document.getElementById('legendblock2').style.backgroundColor=decoration[20];
+		document.getElementById('legendblock3').style.backgroundColor=decoration[35];
+		document.getElementById('legendblock4').style.backgroundColor=decoration[50];
+		document.getElementById('legendblock5').style.backgroundColor=decoration[100];
+		document.getElementById('legendblock6').style.backgroundColor=decoration[1000];
 	} // end of init
 
 	/*function to manually set the date. It assumes a correct date format.*/
@@ -363,8 +379,14 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
        </div><br>
 
    <h4>Legende</h4>
-	Die Farbe und Größe jedes Kreises stellt den Feinstaubwert dar. <br>
-	(hier erscheint später eine Legende).
+	<p><div id='legenddescr'>Die Farbe jedes Kreises stellt den Feinstaubwert dar:</div>
+		<div id='legendblock1'> &lt; 10 µg/m³</div>
+		<div id='legendblock2'> &lt; 20 µg/m³</div>
+		<div id='legendblock3'> &lt; 35 µg/m³</div>
+		<div id='legendblock4'> &lt; 50 µg/m³</div>
+		<div id='legendblock5'> &lt; 100 µg/m³</div>
+		<div id='legendblock6'> &gt; 1000 µg/m³</div>
+	</p>
 
    </div>
    
