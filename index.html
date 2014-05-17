@@ -256,7 +256,8 @@ Init function.
 	      
 		L.tileLayer('http://134.60.77.150/osm/{z}/{x}/{y}.png', {
 		   attribution: '<a target="_blank" href="http://ulmapi.de">UlmApi.de</a>, Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 OpenStreetMap contributors',
-		   maxZoom: 12
+		   minZoom: 7,
+		   maxZoom: 11
 		}).addTo(map);
 		map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
 	
