@@ -287,10 +287,13 @@ Init function.
 		}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
 		});
-		loadData("data"); //load default set. This is independent of index loading.
+		//load default set. This is independent of index loading.
+		loadData("data"); 
 	} // end of init
 	
 	function loadData(id){
+		data = {};
+		console.log("fetching: " + id );
 		$.getJSON(id+".json", function(json) {
 			var obj;
 			$.getJSON("addr_coord.json", function(json0){
@@ -395,7 +398,16 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
    <div id="legend">
 	<h1>Feinstaub in Baden-Württemberg</h1>
 
-<select id='yearIndex' onchange="loadData();">
+<select id='yearIndex' onchange="
+	// Get the current index
+	index = this.selectedIndex;
+	if (index >= 0 && this.options.length > index) {
+		// Get the new value
+		newValue = this.options[index].value;
+	}
+	console.log('the user selected: ' + newValue);
+	loadData(newValue);
+	">
 </select>
 	<p> Wählen Sie einen Tag aus oder verwenden Sie den Schieber.<br>
 	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
