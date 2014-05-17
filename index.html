@@ -265,8 +265,33 @@ Init function.
 	
 		var bw= new L.LatLng(48.62969, 9.1949); 
 		map.setView(bw, 8);
+		
+		document.getElementById('legendblock1').style.backgroundColor=decoration[10];
+		document.getElementById('legendblock2').style.backgroundColor=decoration[20];
+		document.getElementById('legendblock3').style.backgroundColor=decoration[35];
+		document.getElementById('legendblock4').style.backgroundColor=decoration[50];
+		document.getElementById('legendblock5').style.backgroundColor=decoration[100];
+		document.getElementById('legendblock6').style.backgroundColor=decoration[1000];
+		//load the list of available years.
+		$.getJSON("index.json", function(json){
+			index = eval(json);
+			console.log(index);
+			for(var i=0; i<index.length; i++){
+				var dropdown = document.getElementById("yearIndex");
+				var opt = document.createElement("option"); 
+				opt.text = index[i];
+				opt.value = index[i];
+				dropdown.options.add(opt);
+				console.log("created item:" + index[i]);
+			}
+		}).fail(function( jqxhr, textStatus, error ) {
+			console.log( "error:" + jqxhr+ textStatus+ error  );
+		});
+		loadData("data"); //load default set. This is independent of index loading.
+	} // end of init
 	
-		$.getJSON("data.json", function(json) {
+	function loadData(id){
+		$.getJSON(id+".json", function(json) {
 			var obj;
 			$.getJSON("addr_coord.json", function(json0){
 				data = eval(json); // load
@@ -327,14 +352,7 @@ Init function.
 		}).fail(function( jqxhr, textStatus, error ) {
 			console.log( "error:" + jqxhr+ textStatus+ error  );
 		});
-		
-		document.getElementById('legendblock1').style.backgroundColor=decoration[10];
-		document.getElementById('legendblock2').style.backgroundColor=decoration[20];
-		document.getElementById('legendblock3').style.backgroundColor=decoration[35];
-		document.getElementById('legendblock4').style.backgroundColor=decoration[50];
-		document.getElementById('legendblock5').style.backgroundColor=decoration[100];
-		document.getElementById('legendblock6').style.backgroundColor=decoration[1000];
-	} // end of init
+	} // end of loadData
 
 	/*function to manually set the date. It assumes a correct date format.*/
 	function showManual(str){
@@ -376,6 +394,9 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 
    <div id="legend">
 	<h1>Feinstaub in Baden-Württemberg</h1>
+
+<select id='yearIndex' onchange="loadData();">
+</select>
 	<p> Wählen Sie einen Tag aus oder verwenden Sie den Schieber.<br>
 	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
        <div id="slider">
