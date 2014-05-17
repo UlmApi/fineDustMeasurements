@@ -158,6 +158,8 @@ var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["or
 	/**
 	Global vars.
 	**/
+	var currentPlayIndex = 0;
+	var intervalID = false;
 	var map;
 	var data;
 	var circleLayer;
@@ -228,6 +230,9 @@ var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["or
 		}
 		circleLayer = L.layerGroup(circles);
 		circleLayer.addTo(map);
+		
+		//put the UI in a consistent state
+		$("#dateInput").val(myDate);
 	} // end of draw
 
 
@@ -336,9 +341,8 @@ Init function.
 				$(function() {
 					var cbSlider = function(event, ui){
 						draw(timeStep[ui.value]);
-						$("#dateInput").val(timeStep[ui.value]);
-					}
-					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, slide: cbSlider});
+					};
+					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, change: cbSlider, slide: cbSlider});
 				});
 		
 				//we loaded everything, lets draw the first date
@@ -368,6 +372,20 @@ Init function.
 			}
 		}
 		$("#slider").slider("value",v);
+	}
+
+	function play(){
+		//are we already playing?
+		if(intervalID === false){
+			//start playing.
+			intervalID = setInterval(function(){$("#slider").slider("value",currentPlayIndex); currentPlayIndex++;}, 1000);
+			document.getElementsByName('playpause')[0].value="Pause";
+		}else{
+			//stop playing.
+			clearInterval(intervalID);
+			intervalID = false;
+			document.getElementsByName('playpause')[0].value="Play";
+		}
 	}
    </script>
 
@@ -412,7 +430,8 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 	<p> Wählen Sie einen Tag aus oder verwenden Sie den Schieber.<br>
 	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
        <div id="slider">
-       </div><br>
+       </div>
+	<input onclick="play();"  name="playpause" type="button" id="playpause" value="Play"> <br>
 
    <h4>Legende</h4>
 	<p><div id='legenddescr'>Die Farbe jedes Kreises stellt den Feinstaubwert dar:</div>
