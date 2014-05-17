@@ -138,12 +138,12 @@
    <script language="javascript">
 
 //scale factor for the circles. This means, scaleFactor*value is used as circle size.
-var scaleFactor = 150;
-var minSize=1000;
+var scaleFactor = 444444;
+var minSize=3000;
 var maxSize=15000;
 
-function doScale(x){
-	return Math.min(minSize + x*scaleFactor, maxSize);
+function doScale(x){//pi *r^2 = A --> r = sqrt(A/pi)
+	return Math.min(minSize + Math.sqrt(x*scaleFactor), maxSize);
 }
 
 // array that will map integers to strings. Filled at the start, so that we can dynamically assign numbers and days.
