@@ -338,7 +338,7 @@ Init function.
 						draw(timeStep[ui.value]);
 						$("#dateInput").val(timeStep[ui.value]);
 					}
-					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, change: cbSlider});
+					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, slide: cbSlider});
 				});
 		
 				//we loaded everything, lets draw the first date
