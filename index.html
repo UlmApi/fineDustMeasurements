@@ -341,6 +341,7 @@ Init function.
 				$(function() {
 					var cbSlider = function(event, ui){
 						draw(timeStep[ui.value]);
+						currentPlayIndex = ui.value;
 					};
 					$( "#slider" ).slider({ min: 0, max: timeStep.length-1, step: 1, change: cbSlider, slide: cbSlider});
 				});
