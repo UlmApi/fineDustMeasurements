@@ -71,6 +71,9 @@
 	#slider{
 	margin:12px;
 	}
+	#dateInput{
+	width: 50%;
+	}
 	#legendblock2,#legendblock3,#legendblock4,#legendblock5{
 	width: 50%;
 	color: #000;
@@ -421,7 +424,7 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
    <div id="legend">
 	<h1>Feinstaub in Baden-Württemberg</h1>
 
-<select id='yearIndex' onchange="
+Wählen Sie einem Jahr aus: <select id='yearIndex' onchange="
 	// Get the current index
 	index = this.selectedIndex;
 	if (index >= 0 && this.options.length > index) {
@@ -432,11 +435,11 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 	loadData(newValue);
 	">
 </select>
-	<p> Wählen Sie einen Tag aus oder verwenden Sie den Schieber.<br>
-	<input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Anzeigen!"> </p>
+	<p> Aktuell wird angezeigt: <br> <input type="text" name="dateInput" id="dateInput" value="1.1.13"> <input onclick="showManual(document.getElementsByName('dateInput')[0].value);" type="button" value="Verändern!"> <br> 
+	Sie können auch den Slider verwenden:</p>
        <div id="slider">
        </div>
-	<input onclick="play();"  name="playpause" type="button" id="playpause" value="Play"> <br>
+	Automatisch schieben: <input onclick="play();"  name="playpause" type="button" id="playpause" value="Play"></p>
 
    <h4>Legende</h4>
 	<p><div id='legenddescr'>Die Farbe und Größe jedes Kreises stellt den Feinstaubwert dar:</div>
