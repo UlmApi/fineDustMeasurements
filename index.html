@@ -71,15 +71,19 @@
 	#slider{
 	margin:12px;
 	}
-	#legendblock2,#legendblock3,#legendblock4,#legendblock5 {
+	#legendblock2,#legendblock3,#legendblock4,#legendblock5{
 	width: 50%;
 	color: #000;
 	font-family: sans;
 	}
-	#legendblock6, #legendblock1, #legenddescr{
+	#legendblock6, #legendblock1{
 	color: #EEEEEE;
 	font-family: sans;
 	width: 50%;
+	}
+	#legenddescr{
+	color: #EEEEEE;
+	font-family: sans;
 	}
 	#legend{
 	background:#777777;
@@ -226,7 +230,7 @@ var decoration = { 10 : ["green"], 20 : ["lightgreen"], 35: ["yellow"], 50: ["or
 			console.log("Creating circle for " + data[i]["address"] + " at " + data[i]["coords"] + " with value " + val);
 			myCircle = circleInstance(data[i]["address"], data[i]["coords"], val);
 			circles.push(myCircle);
-			myCircle.addTo(map);
+			//myCircle.addTo(map);
 		}
 		circleLayer = L.layerGroup(circles);
 		circleLayer.addTo(map);
@@ -435,7 +439,7 @@ Twitter: <a target="_blank" href="http://twitter.com/ulmapi">@ulmapi</a><br/>
 	<input onclick="play();"  name="playpause" type="button" id="playpause" value="Play"> <br>
 
    <h4>Legende</h4>
-	<p><div id='legenddescr'>Die Farbe jedes Kreises stellt den Feinstaubwert dar:</div>
+	<p><div id='legenddescr'>Die Farbe und Größe jedes Kreises stellt den Feinstaubwert dar:</div>
 		<div id='legendblock1'> &lt; 10 µg/m³</div>
 		<div id='legendblock2'> &lt; 20 µg/m³</div>
 		<div id='legendblock3'> &lt; 35 µg/m³</div>
